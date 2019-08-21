@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <form class="form-group">
+        <label for="FullName">Full Name: </label>
+        <input type="text" [(ngModel)]="fullName" [ngModelOptions]="{standalone: true}" class="form-control">
+        <label for="email">Email: </label>
+        <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control">
+        <label for="password">Password: </label>
+        <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control">
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="Signup()">Sign Up</button>
+    </form>
+</div>
+
+<div>
+    {{fullName}}
+    {{email}}
+    {{password}}
+</div>
+
+<div *ngIf="err !== NULL else elseblock">
+    The error is {{err}}
+</div>
+<ng-template #elseblock>
+    There is not error.
+</ng-template>

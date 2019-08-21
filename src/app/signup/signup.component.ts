@@ -1,0 +1,35 @@
+import { Component, OnInit } from '@angular/core';
+import { SignUpDetails } from "src/app/UserDetails";
+import { CredentialsService } from "src/app/credentials.service";
+
+@Component({
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
+})
+export class SignupComponent implements OnInit {
+
+  fullName: string;
+  email: string;
+  password: string;
+  data: SignUpDetails;
+  err: string;
+  returnValue: any;
+
+  constructor(private _userService: CredentialsService) {
+    this.data = new SignUpDetails();
+  }
+
+  ngOnInit() {
+  }
+
+  Signup() {
+    this.data.fullName = this.fullName;
+    this.data.email = this.email;
+    this.data.password = this.password;
+    console.log("signup details : ", `${this.data}`);
+    console.log(this._userService.signup(this.data)
+      .subscribe(data => this.returnValue = data,
+      error => this.err=error));
+  }
+}
