@@ -17,9 +17,18 @@
     {{password}}
 </div>
 
-<div *ngIf="err !== NULL else elseblock">
+<div *ngIf="err !== null else elseblock">
     The error is {{err}}
 </div>
 <ng-template #elseblock>
     There is not error.
 </ng-template>
+
+<div *ngIf="returnValue !== undefined">
+    <div *ngIf="returnValue.success else failureBlock">
+        {{returnValue.message}}
+    </div>
+    <ng-template #failureBlock>
+        "No record created": {{returnValue.message}}
+    </ng-template>
+</div>

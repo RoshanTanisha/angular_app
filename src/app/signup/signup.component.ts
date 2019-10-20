@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { SignUpDetails } from "src/app/UserDetails";
 import { CredentialsService } from "src/app/credentials.service";
 
+class Data {
+  success: boolean;
+  message: string;
+}
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,9 +19,9 @@ export class SignupComponent implements OnInit {
   password: string;
   data: SignUpDetails;
   err: string;
-  returnValue: any;
+  returnValue: Data;
 
-  constructor(private _userService: CredentialsService) {
+  constructor(private userService: CredentialsService) {
     this.data = new SignUpDetails();
   }
 
@@ -27,9 +32,13 @@ export class SignupComponent implements OnInit {
     this.data.fullName = this.fullName;
     this.data.email = this.email;
     this.data.password = this.password;
-    console.log("signup details : ", `${this.data}`);
-    console.log(this._userService.signup(this.data)
-      .subscribe(data => this.returnValue = data,
-      error => this.err=error));
+    console.log('signup details : ', `${this.data}`);
+    console.log(this.userService.signup(this.data)
+      .subscribe(data => {
+        this.returnValue = data;
+        console.log('return Value=', this.returnValue.success === true);
+        this.err = undefined;
+        },
+      error => this.err = error));
   }
 }

@@ -12,11 +12,16 @@
     </form>
 </div>
 
-<div *ngIf="msg !== NULL; else elseblock">
-    The message from the fake server is {{msg.message}}
+<div *ngIf="returnedData !== undefined; else elseblock">
+    <div *ngIf="returnedData.success else failureBlock">
+        {{returnedData.message}}
+    </div>
+    <ng-template #failureBlock>
+        Login Failed: {{returnedData.message}}
+    </ng-template>
 </div>
 <ng-template #elseblock>
     <div>
-        There is no message from server. {{msg}}
+        There is no message from server.
     </div>
 </ng-template>

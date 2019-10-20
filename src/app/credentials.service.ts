@@ -9,16 +9,16 @@ import {catchError} from 'rxjs/operators';
 })
 export class CredentialsService {
 
-  private _login_url: string = "http://localhost:8000/api/login";
-  private _signup_url: string = "http://localhost:8000/api/signup";
+  private loginUrl = 'http://localhost:8000/api/login';
+  private signupUrl = 'http://localhost:8000/api/signup';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   login(data: LoginDetails): Observable<any>{
-    let json_data = data.stringify();
-    return this._http.post(
-      this._login_url, 
-      json_data,
+    const jsonData = data.stringify();
+    return this.http.post(
+      this.loginUrl,
+      jsonData,
       {
         headers: new HttpHeaders(
           {
@@ -32,28 +32,28 @@ export class CredentialsService {
       );
 
   }
-  signup(data: SignUpDetails) : Observable<any> {
-    let json_data = data.stringify();
-    console.log(json_data);
-    let return_Value = this._http.post(
-      this._signup_url, 
-      json_data,
-      { 
-          headers: new HttpHeaders(
+  signup(data: SignUpDetails): Observable<any> {
+    const jsonData = data.stringify();
+    console.log(jsonData);
+    const returnValue = this.http.post(
+      this.signupUrl,
+      jsonData,
+      {
+        headers: new HttpHeaders(
             {
               'Content-Type': 'application/json'
             }
         )
-      } 
+      }
     )
       .pipe(
         catchError(this.handleError)
       );
-    return return_Value;
+    return returnValue;
   }
 
   handleError(error: HttpErrorResponse) {
     console.log('error has occured: ', error);
-    return throwError(error.message || "Server error");
+    return throwError(error.message || 'Server error');
   }
 }
